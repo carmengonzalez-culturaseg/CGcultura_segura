@@ -1,12 +1,894 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>CG | Cultura Segura</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CG | Cultura Segura — Carmen González</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0d1b3e;
+      --navy-mid: #132040;
+      --navy-light: #1a2d5a;
+      --gold: #c9a84c;
+      --gold-light: #e2c97e;
+      --gold-pale: #f5e6b8;
+      --cream: #fdf6e3;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(13, 27, 62, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+    }
+
+    .nav-logo span {
+      color: var(--white);
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      padding: 0.5rem 1.4rem;
+      border-radius: 2px;
+      transition: background 0.3s, color 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold) !important;
+      color: var(--navy) !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorative large CG letters */
+    .hero-bg-letters {
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32vw;
+      font-weight: 700;
+      color: rgba(201, 168, 76, 0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 1s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .hero-title .gold { color: var(--gold); }
+
+    .hero-subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.7);
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy);
+      padding: 0.9rem 2.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-radius: 2px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201, 168, 76, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      padding: 0.9rem 2.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid rgba(201,168,76,0.4);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.3s, background 0.3s;
+      border-radius: 2px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+
+    /* ── HERO PROFILE CARD ── */
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+
+    .profile-card {
+      background: linear-gradient(160deg, var(--navy-light) 0%, #0a1530 100%);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 8px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      max-width: 320px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(201,168,76,0.15);
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .profile-img-wrap {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .profile-img-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--gold), var(--gold-light), var(--gold), var(--navy) 60%, var(--gold));
+      animation: spin 8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .profile-img-inner {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--navy);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .profile-img-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Placeholder avatar when no image */
+    .profile-avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .profile-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 50%;
+      border: 2px solid var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .profile-badge svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--navy);
+    }
+
+    .profile-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 1rem 0;
+    }
+
+    .profile-divider::before,
+    .profile-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4));
+    }
+
+    .profile-divider::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+    }
+
+    .helmet-icon {
+      color: var(--gold);
+    }
+
+    .profile-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      padding: 0.8rem 0.5rem;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    /* ── GOLD DIVIDER ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 0 4rem 3rem;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3));
+    }
+
+    .section-divider::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 6rem 4rem;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .section-title .gold { color: var(--gold); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: linear-gradient(160deg, rgba(26,45,90,0.6) 0%, rgba(10,21,48,0.8) 100%);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 6px;
+      padding: 2.5rem 2rem;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: linear-gradient(180deg, var(--gold), var(--gold-light));
+      transition: height 0.4s ease;
+    }
+
+    .service-card:hover::before { height: 100%; }
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,0.35);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
+
+    .service-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .service-desc {
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ── WHY US ── */
+    .why {
+      padding: 6rem 4rem;
+      background: linear-gradient(180deg, transparent, rgba(201,168,76,0.03), transparent);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .why-points {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .why-point {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+
+    .why-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: rgba(201,168,76,0.2);
+      line-height: 1;
+      min-width: 2rem;
+    }
+
+    .why-text h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+
+    .why-text p {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .why-quote {
+      background: linear-gradient(160deg, var(--navy-light), #0a1530);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      padding: 3rem;
+      position: relative;
+    }
+
+    .why-quote::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      left: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      color: rgba(201,168,76,0.15);
+      line-height: 1;
+    }
+
+    .why-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--gold-pale);
+      position: relative;
+      z-index: 1;
+    }
+
+    .why-quote-author {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.6);
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 6rem 4rem;
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .contact-title .gold { color: var(--gold); }
+
+    .contact-sub {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.3s;
+    }
+
+    .contact-link:hover { color: var(--gold); }
+
+    .contact-link span {
+      font-size: 1.1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .footer-logo span { color: rgba(255,255,255,0.4); font-weight: 300; }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    /* Gold bottom bar */
+    .gold-bar {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; text-align: center; }
+      .hero-content { order: 2; }
+      .hero-visual { order: 1; margin-bottom: 2.5rem; }
+      .hero-desc { margin: 0 auto 2rem; }
+      .hero-buttons { justify-content: center; }
+      .hero-tag { justify-content: center; }
+      .services { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why { padding: 4rem 1.5rem; }
+      .why-grid { grid-template-columns: 1fr; }
+      .contact { padding: 4rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .section-divider { margin: 0 1.5rem 2rem; }
+    }
+  </style>
 </head>
 <body>
-  <h1>CG | Cultura Segura</h1>
-  <p>Técnica en Higiene y Seguridad</p>
-  <p>Web online 🚀</p>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">CG <span>| Cultura Segura</span></div>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-letters">CG</div>
+
+    <div class="hero-content">
+      <div class="hero-tag">Capacitación Profesional</div>
+      <h1 class="hero-title">
+        CG <span class="gold">|</span><br/>
+        Cultura<br/>
+        Segura
+      </h1>
+      <p class="hero-subtitle">Higiene &amp; Seguridad Laboral</p>
+      <p class="hero-desc">
+        Transformamos la seguridad en una cultura organizacional real. Capacitaciones diseñadas para proteger lo que más importa: las personas.
+      </p>
+      <div class="hero-buttons">
+        <a href="#servicios" class="btn-primary">Ver Capacitaciones</a>
+        <a href="#contacto" class="btn-secondary">Consultá gratis</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="profile-card">
+        <div class="profile-img-wrap">
+          <div class="profile-img-ring"></div>
+          <div class="profile-img-inner">
+            <div class="profile-avatar-placeholder">CG</div>
+          </div>
+          <div class="profile-badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="profile-name">Carmen<br/>González</div>
+
+        <div class="profile-divider">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5" class="helmet-icon">
+            <path d="M2 17h20v2H2zM3.5 15A8.5 8.5 0 0 1 12 6.5 8.5 8.5 0 0 1 20.5 15"/>
+            <circle cx="12" cy="6.5" r="1.5"/>
+          </svg>
+        </div>
+
+        <p class="profile-role">Especialista en H &amp; S Laboral</p>
+
+        <div class="profile-stats">
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Compromiso</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">✓</div>
+            <div class="stat-label">Certificado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="servicios">
+    <div class="section-header">
+      <div class="section-tag">Qué ofrecemos</div>
+      <h2 class="section-title">Capacitaciones <span class="gold">diseñadas</span><br/>para transformar</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🦺</div>
+        <div class="service-title">Inducción en H&S</div>
+        <p class="service-desc">Capacitación inicial obligatoria para nuevos colaboradores. Marco legal, riesgos del puesto y medidas preventivas esenciales.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔥</div>
+        <div class="service-title">Prevención de Incendios</div>
+        <p class="service-desc">Uso de extintores, planes de evacuación, roles de emergencia y simulacros prácticos para equipos de trabajo.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <div class="service-title">Riesgos Eléctricos</div>
+        <p class="service-desc">Identificación de peligros eléctricos, procedimientos de trabajo seguro y uso correcto de EPP específico.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏗️</div>
+        <div class="service-title">Trabajo en Altura</div>
+        <p class="service-desc">Normativa vigente, sistemas de protección contra caídas, habilitación de espacios confinados y procedimientos de rescate.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <div class="service-title">Liderazgo Seguro</div>
+        <p class="service-desc">Formación para supervisores y mandos medios: cómo construir equipos con cultura preventiva sólida y sostenible.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <div class="service-title">Capacitación a Medida</div>
+        <p class="service-desc">Diagnóstico del rubro y diseño de programas personalizados según las necesidades específicas de tu empresa.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider">◆</div>
+
+  <!-- WHY -->
+  <section class="why" id="nosotros">
+    <div class="why-grid">
+      <div>
+        <div class="section-tag">Por qué elegirnos</div>
+        <h2 class="section-title">Seguridad con <span class="gold">propósito</span></h2>
+        <div class="why-points">
+          <div class="why-point">
+            <div class="why-num">01</div>
+            <div class="why-text">
+              <h4>Capacitaciones que se recuerdan</h4>
+              <p>Metodología dinámica y práctica. Nada de presentaciones genéricas: cada capacitación se adapta al rubro y a la realidad del equipo.</p>
+            </div>
+          </div>
+          <div class="why-point">
+            <div class="why-num">02</div>
+            <div class="why-text">
+              <h4>Cumplimiento normativo garantizado</h4>
+              <p>Actualizadas según Ley 19.587 y normativa vigente. Certificados emitidos y documentación en orden para auditorías.</p>
+            </div>
+          </div>
+          <div class="why-point">
+            <div class="why-num">03</div>
+            <div class="why-text">
+              <h4>Trato cercano y profesional</h4>
+              <p>Atención personalizada desde la primera consulta. Acompañamiento real, no solo un servicio transaccional.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-quote">
+        <p>La seguridad no es solo cumplir una norma. Es una decisión que se toma todos los días, en cada puesto de trabajo.</p>
+        <div class="why-quote-author">— Carmen González · CG | Cultura Segura</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contacto">
+    <div class="contact-inner">
+      <div class="section-tag" style="justify-content:center;">Hablemos</div>
+      <h2 class="contact-title">¿Listo para construir<br/><span class="gold">Cultura Segura</span>?</h2>
+      <p class="contact-sub">Consultas sin cargo. Diseñamos la capacitación que tu equipo necesita.</p>
+      <div class="contact-links">
+        <a href="https://wa.me/54" class="contact-link" target="_blank">
+          <span>📱</span> WhatsApp
+        </a>
+        <a href="mailto:contacto@cgculturasegura.com" class="contact-link">
+          <span>✉️</span> Email
+        </a>
+        <a href="https://instagram.com" class="contact-link" target="_blank">
+          <span>📸</span> Instagram
+        </a>
+      </div>
+      <a href="https://wa.me/54" class="btn-primary" target="_blank">Solicitar Capacitación</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">CG <span>| Cultura Segura</span></div>
+    <div class="footer-copy">© 2025 Carmen González · Todos los derechos reservados</div>
+  </footer>
+
+  <div class="gold-bar"></div>
+
 </body>
 </html>
