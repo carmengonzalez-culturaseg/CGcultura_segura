@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CG | Cultura Segura — Carmen González</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #0d1b3e;
@@ -155,12 +155,13 @@
     }
 
     .hero-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Playfair Display', serif;
       font-size: clamp(3rem, 5vw, 5rem);
-      font-weight: 700;
+      font-weight: 900;
       line-height: 1.05;
       margin-bottom: 1rem;
       color: var(--white);
+      letter-spacing: 0.02em;
     }
 
     .hero-title .gold { color: var(--gold); }
@@ -332,12 +333,14 @@
     }
 
     .profile-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Playfair Display', serif;
       font-size: 2rem;
-      font-weight: 700;
+      font-weight: 900;
       color: var(--gold);
       line-height: 1.1;
       margin-bottom: 0.5rem;
+      letter-spacing: 0.03em;
+      text-shadow: 0 2px 12px rgba(201,168,76,0.25);
     }
 
     .profile-divider {
@@ -689,6 +692,9 @@
     }
 
     /* ── RESPONSIVE ── */
+    /* Reemplazo section responsive */
+    .reemplazo-grid { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; }
+    .reemplazo-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 2rem; }
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
@@ -705,6 +711,48 @@
       .contact { padding: 4rem 1.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
       .section-divider { margin: 0 1.5rem 2rem; }
+
+      /* Reemplazo section responsive */
+      .reemplazo-grid { grid-template-columns: 1fr !important; }
+      .reemplazo-checks { grid-template-columns: 1fr !important; }
+      .reemplazo-grid > div:last-child { display: none !important; }
+      .reemplazo-grid { padding: 0 !important; }
+      section.reemplazo-section { padding: 2rem 1rem !important; }
+      .reemplazo-inner { padding: 1.5rem !important; }
+
+      /* Fix grillas internas en móvil */
+      div[style*="grid-template-columns: repeat(2"] ,
+      div[style*="grid-template-columns:repeat(2"] {
+        grid-template-columns: 1fr !important;
+      }
+      div[style*="grid-template-columns: repeat(3"] ,
+      div[style*="grid-template-columns:repeat(3"] {
+        grid-template-columns: 1fr !important;
+      }
+      /* Cotizador inputs */
+      div[style*="grid-template-columns:1fr 1fr"],
+      div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+      /* Secciones con padding lateral grande */
+      section[style*="padding:6rem 4rem"],
+      section[style*="padding: 6rem 4rem"] {
+        padding: 3rem 1.5rem !important;
+      }
+      /* Botones tipo pill que se cortan */
+      #rubros, #caps, #modalidad, #personas, #catering {
+        flex-direction: column !important;
+      }
+      #rubros button, #caps button, #modalidad button,
+      #personas button, #catering button {
+        width: 100% !important;
+        text-align: left !important;
+        border-radius: 8px !important;
+      }
+      /* Max width 900px en cotizador */
+      div[style*="max-width:900px"] {
+        max-width: 100% !important;
+      }
     }
   </style>
 </head>
@@ -716,6 +764,7 @@
     <ul class="nav-links">
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="https://www.instagram.com/cultura_segura_c.g?igsh=NW85dDd1czhqd2x6" target="_blank">Instagram</a></li>
       <li><a href="#contacto" class="nav-cta">Contacto</a></li>
     </ul>
   </nav>
@@ -731,162 +780,6 @@
         Cultura<br/>
         Segura
       </h1>
-      <p class="hero-subtitle">Higiene &amp; Seguridad Laboral</p>
+      <p class="hero-subtitle">Técnica en Higiene &amp; Seguridad · Mat. THYS 007911 PBA</p>
       <p class="hero-desc">
-        Transformamos la seguridad en una cultura organizacional real. Capacitaciones diseñadas para proteger lo que más importa: las personas.
-      </p>
-      <div class="hero-buttons">
-        <a href="#servicios" class="btn-primary">Ver Capacitaciones</a>
-        <a href="#contacto" class="btn-secondary">Consultá gratis</a>
-      </div>
-    </div>
-
-    <div class="hero-visual">
-      <div class="profile-card">
-        <div class="profile-img-wrap">
-          <div class="profile-img-ring"></div>
-          <div class="profile-img-inner">
-            <div class="profile-avatar-placeholder">CG</div>
-          </div>
-          <div class="profile-badge">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-            </svg>
-          </div>
-        </div>
-
-        <div class="profile-name">Carmen<br/>González</div>
-
-        <div class="profile-divider">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5" class="helmet-icon">
-            <path d="M2 17h20v2H2zM3.5 15A8.5 8.5 0 0 1 12 6.5 8.5 8.5 0 0 1 20.5 15"/>
-            <circle cx="12" cy="6.5" r="1.5"/>
-          </svg>
-        </div>
-
-        <p class="profile-role">Especialista en H &amp; S Laboral</p>
-
-        <div class="profile-stats">
-          <div class="stat">
-            <div class="stat-num">100%</div>
-            <div class="stat-label">Compromiso</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">✓</div>
-            <div class="stat-label">Certificado</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="services" id="servicios">
-    <div class="section-header">
-      <div class="section-tag">Qué ofrecemos</div>
-      <h2 class="section-title">Capacitaciones <span class="gold">diseñadas</span><br/>para transformar</h2>
-    </div>
-
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon">🦺</div>
-        <div class="service-title">Inducción en H&S</div>
-        <p class="service-desc">Capacitación inicial obligatoria para nuevos colaboradores. Marco legal, riesgos del puesto y medidas preventivas esenciales.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🔥</div>
-        <div class="service-title">Prevención de Incendios</div>
-        <p class="service-desc">Uso de extintores, planes de evacuación, roles de emergencia y simulacros prácticos para equipos de trabajo.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">⚡</div>
-        <div class="service-title">Riesgos Eléctricos</div>
-        <p class="service-desc">Identificación de peligros eléctricos, procedimientos de trabajo seguro y uso correcto de EPP específico.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🏗️</div>
-        <div class="service-title">Trabajo en Altura</div>
-        <p class="service-desc">Normativa vigente, sistemas de protección contra caídas, habilitación de espacios confinados y procedimientos de rescate.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🤝</div>
-        <div class="service-title">Liderazgo Seguro</div>
-        <p class="service-desc">Formación para supervisores y mandos medios: cómo construir equipos con cultura preventiva sólida y sostenible.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">📋</div>
-        <div class="service-title">Capacitación a Medida</div>
-        <p class="service-desc">Diagnóstico del rubro y diseño de programas personalizados según las necesidades específicas de tu empresa.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider">◆</div>
-
-  <!-- WHY -->
-  <section class="why" id="nosotros">
-    <div class="why-grid">
-      <div>
-        <div class="section-tag">Por qué elegirnos</div>
-        <h2 class="section-title">Seguridad con <span class="gold">propósito</span></h2>
-        <div class="why-points">
-          <div class="why-point">
-            <div class="why-num">01</div>
-            <div class="why-text">
-              <h4>Capacitaciones que se recuerdan</h4>
-              <p>Metodología dinámica y práctica. Nada de presentaciones genéricas: cada capacitación se adapta al rubro y a la realidad del equipo.</p>
-            </div>
-          </div>
-          <div class="why-point">
-            <div class="why-num">02</div>
-            <div class="why-text">
-              <h4>Cumplimiento normativo garantizado</h4>
-              <p>Actualizadas según Ley 19.587 y normativa vigente. Certificados emitidos y documentación en orden para auditorías.</p>
-            </div>
-          </div>
-          <div class="why-point">
-            <div class="why-num">03</div>
-            <div class="why-text">
-              <h4>Trato cercano y profesional</h4>
-              <p>Atención personalizada desde la primera consulta. Acompañamiento real, no solo un servicio transaccional.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="why-quote">
-        <p>La seguridad no es solo cumplir una norma. Es una decisión que se toma todos los días, en cada puesto de trabajo.</p>
-        <div class="why-quote-author">— Carmen González · CG | Cultura Segura</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact" id="contacto">
-    <div class="contact-inner">
-      <div class="section-tag" style="justify-content:center;">Hablemos</div>
-      <h2 class="contact-title">¿Listo para construir<br/><span class="gold">Cultura Segura</span>?</h2>
-      <p class="contact-sub">Consultas sin cargo. Diseñamos la capacitación que tu equipo necesita.</p>
-      <div class="contact-links">
-        <a href="https://wa.me/54" class="contact-link" target="_blank">
-          <span>📱</span> WhatsApp
-        </a>
-        <a href="mailto:contacto@cgculturasegura.com" class="contact-link">
-          <span>✉️</span> Email
-        </a>
-        <a href="https://instagram.com" class="contact-link" target="_blank">
-          <span>📸</span> Instagram
-        </a>
-      </div>
-      <a href="https://wa.me/54" class="btn-primary" target="_blank">Solicitar Capacitación</a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">CG <span>| Cultura Segura</span></div>
-    <div class="footer-copy">© 2025 Carmen González · Todos los derechos reservados</div>
-  </footer>
-  <div class="gold-bar"></div>
-</body>
-</html>
+        Soy Carmen González, Técnica en Higiene y Seguridad con amplia experiencia en obras, industria
