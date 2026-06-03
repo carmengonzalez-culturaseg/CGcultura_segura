@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,9 +19,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--navy);
       color: var(--white);
@@ -28,7 +27,6 @@
       overflow-x: hidden;
     }
 
-    /* ── NOISE TEXTURE OVERLAY ── */
     body::before {
       content: '';
       position: fixed;
@@ -39,7 +37,6 @@
       opacity: 0.4;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -97,7 +94,6 @@
       color: var(--navy) !important;
     }
 
-    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: grid;
@@ -108,7 +104,6 @@
       overflow: hidden;
     }
 
-    /* decorative large CG letters */
     .hero-bg-letters {
       position: absolute;
       right: -2rem;
@@ -132,7 +127,7 @@
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(40px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hero-tag {
@@ -232,7 +227,6 @@
       background: rgba(201,168,76,0.08);
     }
 
-    /* ── HERO PROFILE CARD ── */
     .hero-visual {
       position: relative;
       z-index: 2;
@@ -297,7 +291,6 @@
       object-fit: cover;
     }
 
-    /* Placeholder avatar when no image */
     .profile-avatar-placeholder {
       width: 100%;
       height: 100%;
@@ -404,7 +397,6 @@
       margin-top: 0.2rem;
     }
 
-    /* ── GOLD DIVIDER ── */
     .section-divider {
       display: flex;
       align-items: center;
@@ -424,7 +416,6 @@
       background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
     }
 
-    /* ── SERVICES ── */
     .services {
       padding: 6rem 4rem;
       position: relative;
@@ -523,7 +514,6 @@
       color: rgba(255,255,255,0.55);
     }
 
-    /* ── WHY US ── */
     .why {
       padding: 6rem 4rem;
       background: linear-gradient(180deg, transparent, rgba(201,168,76,0.03), transparent);
@@ -609,7 +599,6 @@
       color: rgba(201,168,76,0.6);
     }
 
-    /* ── CONTACT ── */
     .contact {
       padding: 6rem 4rem;
       text-align: center;
@@ -661,7 +650,6 @@
       font-size: 1.1rem;
     }
 
-    /* ── FOOTER ── */
     footer {
       border-top: 1px solid rgba(201,168,76,0.15);
       padding: 2rem 4rem;
@@ -685,16 +673,11 @@
       letter-spacing: 0.1em;
     }
 
-    /* Gold bottom bar */
     .gold-bar {
       height: 3px;
       background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
     }
 
-    /* ── RESPONSIVE ── */
-    /* Reemplazo section responsive */
-    .reemplazo-grid { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; }
-    .reemplazo-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 2rem; }
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
@@ -711,54 +694,11 @@
       .contact { padding: 4rem 1.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
       .section-divider { margin: 0 1.5rem 2rem; }
-
-      /* Reemplazo section responsive */
-      .reemplazo-grid { grid-template-columns: 1fr !important; }
-      .reemplazo-checks { grid-template-columns: 1fr !important; }
-      .reemplazo-grid > div:last-child { display: none !important; }
-      .reemplazo-grid { padding: 0 !important; }
-      section.reemplazo-section { padding: 2rem 1rem !important; }
-      .reemplazo-inner { padding: 1.5rem !important; }
-
-      /* Fix grillas internas en móvil */
-      div[style*="grid-template-columns: repeat(2"] ,
-      div[style*="grid-template-columns:repeat(2"] {
-        grid-template-columns: 1fr !important;
-      }
-      div[style*="grid-template-columns: repeat(3"] ,
-      div[style*="grid-template-columns:repeat(3"] {
-        grid-template-columns: 1fr !important;
-      }
-      /* Cotizador inputs */
-      div[style*="grid-template-columns:1fr 1fr"],
-      div[style*="grid-template-columns: 1fr 1fr"] {
-        grid-template-columns: 1fr !important;
-      }
-      /* Secciones con padding lateral grande */
-      section[style*="padding:6rem 4rem"],
-      section[style*="padding: 6rem 4rem"] {
-        padding: 3rem 1.5rem !important;
-      }
-      /* Botones tipo pill que se cortan */
-      #rubros, #caps, #modalidad, #personas, #catering {
-        flex-direction: column !important;
-      }
-      #rubros button, #caps button, #modalidad button,
-      #personas button, #catering button {
-        width: 100% !important;
-        text-align: left !important;
-        border-radius: 8px !important;
-      }
-      /* Max width 900px en cotizador */
-      div[style*="max-width:900px"] {
-        max-width: 100% !important;
-      }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-logo">CG <span>| Cultura Segura</span></div>
     <ul class="nav-links">
@@ -769,7 +709,6 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg-letters">CG</div>
 
@@ -782,4 +721,56 @@
       </h1>
       <p class="hero-subtitle">Técnica en Higiene &amp; Seguridad · Mat. THYS 007911 PBA</p>
       <p class="hero-desc">
-        Soy Carmen González,Técnica en Higiene y Seguridad con amplia experiencia en obras, industria
+        Soy Carmen González, Técnica en Higiene y Seguridad con amplia experiencia en obras, industria y logística. Responsable, exigente en prevención y comprometida con la seguridad real de cada equipo de trabajo.
+      </p>
+      <div class="hero-buttons">
+        <a href="#servicios" class="btn-primary">Ver Capacitaciones</a>
+        <a href="#contacto" class="btn-secondary">Consultá gratis</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="profile-card">
+        <div class="profile-img-wrap">
+          <div class="profile-img-ring"></div>
+          <div class="profile-img-inner">
+            <div class="profile-avatar-placeholder">CG</div>
+          </div>
+          <div class="profile-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          </div>
+        </div>
+        <h3 class="profile-name">Carmen<br>González</h3>
+        <div class="profile-divider"><span class="helmet-icon">⛑️</span></div>
+        <p class="profile-role">Técnica en Higiene y Seguridad</p>
+        <div class="profile-stats">
+          <div class="stat">
+            <div class="stat-num">10+</div>
+            <div class="stat-label">Años Exp.</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">500+</div>
+            <div class="stat-label">Capacitados</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="services" id="servicios">
+    <div class="section-header">
+      <div class="section-tag">Nuestros Servicios</div>
+      <h2 class="section-title">Capacitaciones que <span class="gold">salvan vidas</span></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏗️</div>
+        <h3 class="service-title">Seguridad en Obras</h3>
+        <p class="service-desc">Protocolos completos para construcción. Caídas en altura, andamios, EPP y señalización según Ley 19.587.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏭</div>
+        <h3 class="service-title">Industria y Planta</h3>
+        <p class="service-desc">Riesgo eléctrico, espacios confinad
